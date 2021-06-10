@@ -7,7 +7,7 @@ const options = {
     legend: {
       display: false,
     },
-  },
+
   elements: {
     point: {
       radius: 0,
@@ -17,34 +17,36 @@ const options = {
   tooltips: {
     mode: "index",
     intersect: false,
-    callbacks: {
+    callback: {
       label: function (tooltipItem, data) {
-        return numeral(tooltipItem.value).format("+0,0");
+        return numeral(tooltipItem.value).format("+0a");
       },
     },
   },
+
   scales: {
-    xAxes: [
+    xAxis: [
       {
-        type: "time",
+        type: "date",
         time: {
           format: "MM/DD/YY",
           tooltipFormat: "ll",
         },
       },
     ],
-    yAxes: [
+    yAxis: [
       {
         gridLines:{
           display: false,
         },
         ticks: {
           callback: function (value, index, values){
-            return numeral(value).format("0a");
+            return index % 2 === 0 ? numeral(value).format("0a") : "";
           },
         },
       },
     ],
+  },
   },
 };
 
@@ -65,7 +67,7 @@ const buildChartData = (data, casesType) => {
   return chartData;
 };
 
-function LineGraph({ casesType = "cases" }) {
+function LineGraph({ casesType }) {
   const [data, setData] = useState({});
 
   useEffect (() => {
@@ -77,7 +79,7 @@ function LineGraph({ casesType = "cases" }) {
       .then ((data) => {
         let chartData = buildChartData(data, casesType);
         setData(chartData);
-        console.log(chartData);
+
       });
     };
 
@@ -92,8 +94,8 @@ function LineGraph({ casesType = "cases" }) {
         data={{
           datasets: [
             {
-              backgroundColor: "rgba(54, 162, 235, 0.5)",
-              bordercolor: "rgb(54, 162, 235, 1)",
+              backgroundColor: "rgba(204, 16, 52, 0.5)",
+              bordercolor: "#CC1034",
               data: data,
             },
           ],

@@ -1,5 +1,7 @@
 import React from 'react';
 import "./Table.css";
+import numeral from "numeral";
+import {FastCounter} from 'react-smooth-counter';
 
 function Table ({countries}) {
   return (
@@ -10,7 +12,14 @@ function Table ({countries}) {
             {country}
           </td>
           <td>
-            <strong>{cases}</strong>
+            <strong>
+              <FastCounter
+                delay={0}
+                startNumber={0}
+                to={cases}
+              />
+
+            </strong>
           </td>
         </tr>
       ))}
